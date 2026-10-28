@@ -22,6 +22,17 @@ export class SimulationController {
     if (this.mode === "demo")
       this.state = simulationReducer(this.state, action);
   }
+  // Deterministic save/restore used by the guided demonstration ("Voltar" restores a step).
+  snapshot() {
+    return { state: this.state, dam: this.dam, elapsed: this.elapsed };
+  }
+  restore(snap) {
+    if (this.mode !== "demo") return;
+    this.tour = false;
+    this.state = snap.state;
+    this.dam = snap.dam;
+    this.elapsed = snap.elapsed;
+  }
   setMode(mode) {
     this.mode = mode;
     this.tour = false;
@@ -93,6 +104,13 @@ export class SimulationController {
               : ""),
         input: "Demonstração simulada",
         running: s.running,
+        mode: "demo",
+        hydraulic: true,
+        levelCm: s.galleryLiters,
+        distanceCm: null,
+        sensorState: s.sensorFault ? "fault" : "valid",
+        tankFull: s.tankLiters >= s.capacityLiters - 1e-9,
+        tankEmpty: s.tankLiters <= 1e-9,
       };
     }
     const snap = this.mqtt.getSnapshot(),
@@ -113,6 +131,14 @@ export class SimulationController {
           ? "Entrada virtual do ESP32"
           : "Sensor HC-SR04",
       running: fresh,
+      mode: "mqtt",
+      // No flow sensor exists: telemetry confirms relay commands, not water movement.
+      hydraulic: false,
+      levelCm: fresh && t.sensor_ok ? t.level_cm : null,
+      distanceCm: fresh && t.sensor_ok ? t.distance_cm : null,
+      sensorState: !fresh ? "unavailable" : t.sensor_ok ? "valid" : "fault",
+      tankFull: fresh ? t.tank_full : null,
+      tankEmpty: fresh ? t.tank_empty : null,
       connection: snap.connection,
       error: snap.error,
       receivedAt: snap.receivedAt,

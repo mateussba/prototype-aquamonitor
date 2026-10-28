@@ -799,3 +799,512 @@ footer {
     max-width: calc(100% - 20px);
   }
 }
+
+/* ===== Demonstração técnica: três tarefas, inspetor, esquema, rótulos contextuais ===== */
+header {
+  height: 72px;
+  padding: 0 24px;
+}
+main {
+  height: calc(100dvh - 72px);
+  min-height: 520px;
+}
+.scene-heading {
+  top: 18px;
+  left: 24px;
+}
+.scene-heading h1 {
+  font-size: 26px;
+  margin: 6px 0 0;
+}
+.source-badge {
+  margin-top: 10px;
+}
+.tasks {
+  display: flex;
+  gap: 4px;
+  background: #e6ece3;
+  border-radius: 8px;
+  padding: 4px;
+}
+.tasks button {
+  border: 0;
+  background: transparent;
+  font-size: 12px;
+  padding: 9px 16px;
+  white-space: nowrap;
+}
+.tasks button[aria-selected="true"] {
+  background: #fcfdf8;
+  color: #1f5a47;
+  font-weight: 600;
+  box-shadow: 0 1px 4px #34533620;
+}
+.monitor {
+  top: 18px;
+  right: 18px;
+  width: 248px;
+  padding: 16px;
+}
+.monitor.collapsed .monitor-body {
+  display: none;
+}
+.panel-top .mini {
+  background: transparent;
+  border: 1px solid #567463;
+  color: #cfe1d5;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1;
+}
+.panel-top[data-fresh="false"] {
+  color: #d6b67e;
+}
+.reading strong {
+  font-size: 44px;
+}
+dl > div {
+  margin: 9px 0;
+}
+.dock {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  max-width: min(980px, calc(100% - 300px));
+  background: #f7f9f2f2;
+  border: 1px solid #cbd8c9;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px #2b493818;
+  padding: 10px 12px;
+  backdrop-filter: blur(8px);
+}
+.dock .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.dock .row.sub {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #dfe6da;
+}
+.dock button {
+  font-size: 11px;
+  padding: 9px 11px;
+  white-space: nowrap;
+}
+.dock .primary {
+  background: #2d6751;
+  border-color: #2d6751;
+  color: #f0f5eb;
+}
+.dock .square {
+  width: 36px;
+  padding: 9px 0;
+}
+.rain-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10px;
+  color: #577063;
+  min-width: 150px;
+}
+.hint {
+  font-size: 10px;
+  color: #7e9081;
+}
+.views {
+  position: relative;
+}
+.views-menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  width: 300px;
+  padding: 8px;
+  background: #fafbf6;
+  border: 1px solid #c5d3c2;
+  border-radius: 8px;
+  box-shadow: 0 8px 25px #35503522;
+  z-index: 5;
+}
+.views-menu[hidden] {
+  display: none;
+}
+.views-menu button {
+  text-align: left;
+}
+.seg {
+  display: flex;
+  background: #e6ece3;
+  border-radius: 7px;
+  padding: 3px;
+}
+.seg button {
+  border: 0;
+  background: transparent;
+}
+.seg button[aria-pressed="true"] {
+  background: #fcfdf8;
+  color: #1f5a47;
+  font-weight: 600;
+}
+.step {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #dfe6da;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-width: 640px;
+}
+.step strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1f4c3e;
+}
+.step p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #4d6657;
+}
+.wait {
+  font-size: 11px;
+  color: #a06d2a;
+}
+.wait:not(:empty):before {
+  content: "◌ ";
+}
+.wait.ok {
+  color: #2f7d5b;
+}
+.wait.ok:not(:empty):before {
+  content: "✓ ";
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin-top: 9px;
+  font-size: 10px;
+  color: #4f6658;
+}
+.legend div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.legend svg {
+  width: 34px;
+  height: 10px;
+}
+.inspector {
+  left: auto;
+  right: 18px;
+  bottom: 18px;
+  width: 300px;
+  padding: 14px 16px;
+}
+.inspector h2 {
+  font-size: 15px;
+  margin: 6px 0;
+}
+.inspector p {
+  margin: 0 0 10px;
+  line-height: 1.55;
+}
+.inspect-state {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: #edf2e9;
+}
+.inspect-state span {
+  color: #82927f;
+  letter-spacing: 1px;
+  font-size: 8px;
+  text-transform: uppercase;
+}
+.inspect-state strong {
+  font-weight: 500;
+  color: #2a5544;
+  line-height: 1.45;
+}
+.inspect-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.inspect-actions button {
+  font-size: 11px;
+  padding: 7px 10px;
+}
+.world-label {
+  pointer-events: none;
+  max-width: 260px;
+  white-space: normal;
+  line-height: 1.4;
+}
+.world-label.selected {
+  background: #1f4c3e;
+  color: #eef5ec;
+  border-color: #1f4c3e;
+  font-size: 11px;
+  font-weight: 600;
+}
+.world-label.part {
+  font-size: 9px;
+  background: #fafbf6e8;
+}
+.world-label.stage {
+  max-width: 300px;
+  font-size: 10px;
+  background: #fffdf4f2;
+  border-color: #c9b98a;
+  color: #4a4228;
+}
+.world-label.reading {
+  max-width: 280px;
+  font-size: 10px;
+  border-left: 3px solid #1f9e8f;
+}
+.world-label.reading.fault {
+  border-left-color: #d2453a;
+  color: #8a2b22;
+}
+.world-label.reading.unavailable {
+  border-left-color: #9aa39d;
+  color: #6b736e;
+}
+.world-label:before {
+  display: none;
+}
+.note {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff8e6f2;
+  border: 1px solid #e0c98c;
+  color: #6a5520;
+  font-size: 11px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  max-width: 460px;
+  text-align: center;
+}
+.schematic {
+  position: absolute;
+  top: 120px;
+  left: 18px;
+  width: min(560px, calc(100% - 36px));
+  background: #fafbf6f8;
+  border: 1px solid #c5d3c2;
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 30px #2b493822;
+  z-index: 3;
+}
+.schematic-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.schematic-head small {
+  font-size: 8px;
+  letter-spacing: 1.2px;
+  color: #82927f;
+}
+.schematic-head h2 {
+  font-size: 14px;
+  margin: 4px 0 6px;
+}
+.schematic-head button {
+  border: 0;
+  background: none;
+  font-size: 19px;
+}
+.schematic svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.schematic .blk rect {
+  fill: #fff;
+  stroke: #9fb3a5;
+}
+.schematic text {
+  font-size: 10px;
+  fill: #4d6657;
+}
+.schematic text.t {
+  font-weight: 700;
+  font-size: 11px;
+  fill: #1f4c3e;
+}
+.schematic text.mute {
+  fill: #8a988e;
+  font-size: 9px;
+}
+.schematic text.st.valid {
+  fill: #1f8a6f;
+}
+.schematic text.st.fault {
+  fill: #c2392f;
+}
+.schematic text.st.unavailable {
+  fill: #8a988e;
+}
+.schematic .ln {
+  fill: none;
+  stroke-linecap: round;
+  transition: opacity 0.3s;
+}
+.schematic .sig {
+  stroke: #1f9e8f;
+  stroke-width: 2.4;
+  stroke-dasharray: 6 4;
+}
+.schematic .cmd {
+  stroke: #7a55b8;
+  stroke-width: 3;
+  stroke-dasharray: 0.1 5;
+}
+.schematic .pwr {
+  stroke: #c77426;
+  stroke-width: 3.5;
+}
+.schematic .blade {
+  transition: all 0.25s;
+}
+.schematic .blade.live {
+  stroke: #e0862e;
+}
+.schematic .led {
+  fill: #c7cec9;
+}
+.schematic .led.on {
+  fill: #33c26b;
+}
+.schematic .fault path {
+  stroke: #d2453a;
+  stroke-width: 4;
+}
+.schematic[data-sensor="fault"] #l-sig,
+.schematic[data-sensor="unavailable"] #l-sig {
+  stroke: #b9c0bb;
+}
+.schematic[data-focus="signal"] .cmd,
+.schematic[data-focus="signal"] .pwr,
+.schematic[data-focus="command"] .sig,
+.schematic[data-focus="command"] .pwr:not(.blade),
+.schematic[data-focus="power"] .sig,
+.schematic[data-focus="power"] .cmd {
+  opacity: 0.18;
+}
+.sch-note {
+  font-size: 10px;
+  color: #5d7365;
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
+@media (max-width: 1100px) {
+  header {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 10px 16px;
+    gap: 10px;
+  }
+  main {
+    height: calc(100dvh - 116px);
+  }
+  .dock {
+    max-width: calc(100% - 36px);
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+  }
+  .inspector {
+    bottom: auto;
+    top: 90px;
+    right: 12px;
+  }
+  .monitor {
+    width: 220px;
+  }
+}
+@media (max-width: 700px) {
+  .brand small,
+  .connection {
+    display: none;
+  }
+  .tasks {
+    order: 3;
+    width: 100%;
+  }
+  .tasks button {
+    flex: 1;
+    padding: 9px 6px;
+    font-size: 11px;
+  }
+  main {
+    height: calc(100dvh - 150px);
+    min-height: 480px;
+  }
+  .scene-heading {
+    display: none;
+  }
+  .monitor {
+    top: 10px;
+    right: 10px;
+    left: auto;
+    width: 190px;
+    padding: 10px;
+  }
+  .monitor dl,
+  .monitor .destination,
+  .monitor .panel-foot {
+    display: none;
+  }
+  .inspector {
+    top: auto;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    z-index: 4;
+  }
+  .dock {
+    padding: 8px;
+  }
+  .dock button {
+    padding: 8px 9px;
+  }
+  .hint,
+  .quality-label {
+    display: none;
+  }
+  .legend {
+    font-size: 9px;
+  }
+  .schematic {
+    top: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+  }
+  .step p {
+    font-size: 11px;
+  }
+}

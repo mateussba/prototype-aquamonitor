@@ -29,15 +29,13 @@ npm run build
 
 ## Roteiro de apresentação
 
-1. Escolha **Demonstração**. Todos os dados desse modo são simulados.
-2. Clique **Demonstração completa**: inicia chuva forte, acelera o motor didático em 120×, solicita reúso e executa o ciclo por cerca de 70 segundos de execução da cena. A chuva termina após 12 segundos; a drenagem reduz o nível e a segunda bomba transporta a água. O tempo pausa quando o navegador suspende a aba.
-3. Selecione **Galerias**, **Reservatório**, **Bombas**, **Tubulação** e **Barragem**, ou clique nas peças. Os detalhes aparecem no painel de inspeção.
-4. Use **Vista subterrânea** para separar a superfície do corte, e **Exibir cidade** para ocultar a camada urbana.
-5. **Simular alerta** mantém chuva forte até o nível crítico. **Falha do sensor** demonstra a proteção da drenagem; o mesmo botão restaura o sensor.
-6. Ajuste chuva, pause ou reinicie. O botão de reúso alterna a solicitação da segunda bomba. A drenagem continua automática.
-7. Use **Tela cheia** no topo (ou F11) e qualidade **Baixa** em notebook lento. Auto reduz qualidade se detectar quadros lentos. A qualidade baixa preserva simulação, seleção e fluxos.
+A interface tem três tarefas no topo:
 
-Arraste para orbitar, use scroll/pinça para zoom e botão direito/dois dedos para panorâmica. Os botões de câmera também são acessíveis pelo teclado.
+- **Explorar** — simulação (chuva, alerta, reúso, falha do sensor), seleção de peças e o menu recolhido **Perspectivas**. Clicar numa peça abre o inspetor (nome, função, estado, **Ver conexões**, **Focar**); selecionar nunca move a câmera nem envia comandos.
+- **Entender o sistema** — **Acompanhar a água** (percorre chuva → rua → grelhas → coletor → galeria → P01 → reservatório → P02 → barragem), **Todas as conexões**, **Corte funcional** (remove a quadra frontal e abre os tubos da entrada até o bombeamento), **Isolar seleção** (o entorno vira maquete branca opaca), **Vista explodida** (grupos afastados, linhas tracejadas nas conexões separadas, sem água entre os vãos) e **Esquema elétrico** ampliado.
+- **Demonstrar** — roteiros **Ciclo normal** (9 etapas) e **Falha do sensor** (7 etapas), sempre no modo local. As etapas que dependem de nível ou acionamento esperam a condição no simulador (ex.: 20 cm para ligar P01). **Voltar** restaura o estado salvo ao entrar na etapa; **Pausar**, **Avançar** e **Reiniciar** disponíveis.
+
+Legenda de traçados: tubo claro com pontos = gravidade; tubo azulado com setas = bombeado; cabo tracejado = sinal; pontilhado = comando; contínuo grosso = alimentação.
 
 ## Arquitetura encontrada e reutilização
 
@@ -71,6 +69,14 @@ Inicie o Wokwi e escolha **ESP32 · MQTT** no protótipo. O protótipo é **some
 Pacotes retidos não comprovam atualização e são descartados. Leituras válidas expiram em **6 segundos**. Desconexão, status offline ou expiração interrompem os fluxos e mostram bombas desconhecidas. O último nível pode permanecer desenhado, esmaecido e identificado como desatualizado. Sensor inválido não apresenta leitura numérica no MQTT. Alarmes e erros de validação aparecem em texto.
 
 ## Verificação e limites
+
+- Modelagem explícita (`src/scene/Network.js`): caixas de ralo com corte local, coletor por gravidade com tirantes, travessias de parede com luva, captações com crivo, saída de P01 sobre a parede do reservatório, linha de P02 com suporte e travessia da crista, boias, HC-SR04 em suporte, quadro com ESP32 e módulo de 2 relés, cabos de sinal/comando/alimentação.
+- O motor não modela acúmulo na rua nem atraso no coletor: a chuva efetiva entra direto na galeria. O acúmulo na rua é visual.
+- A distância do sensor no modo local usa a referência didática da maquete (face do sensor ao fundo da galeria ≈ 33,7 cm). No MQTT são exibidos `distance_cm` e `level_cm` do firmware; a referência do firmware não é publicada.
+- Pinagem do ESP32 e alimentação das bombas não estão documentadas: aparecem como “não documentadas”.
+- No MQTT, relé ligado é mostrado como **comando**; não há partículas de água, rotação de rotor nem confirmação de funcionamento (não há sensor de vazão).
+- A barragem como destino do reúso continua ilustrativa. O retorno por gravidade do protótipo físico (lousa) não existe no código e não foi modelado.
+- Nesta rodada foram executados apenas `node --check` e `vite build` (Node limitado a 2 GB). Testes e navegador não foram executados.
 
 - `npm test` executa os 7 testes do protótipo. Os testes do dashboard pertencem ao projeto original.
 - Build de produção passou. Three.js gera um aviso de tamanho de chunk (~503 kB antes de gzip); isso não impede execução local.
